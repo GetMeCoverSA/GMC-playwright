@@ -1,0 +1,60 @@
+{
+  "name": "gmce2e",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.23.0",
+    "@playwright/test": "^1.59.1",
+    "@types/axios": "^0.9.36",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.13.14",
+    "allure-commandline": "^2.33.0",
+    "allure-playwright": "^3.2.1",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-playwright": "^2.2.0",
+    "eslint-plugin-prettier": "^5.2.5",
+    "fs-extra": "^11.3.0",
+    "globals": "^16.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^15.5.0",
+    "playwright": "^1.51.1",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.29.0"
+  },
+  "dependencies": {
+    "axios": "^1.8.4",
+    "dotenv": "^16.4.7",
+    "winston": "^3.17.0"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,mjs,json}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axaydeole/starship-e2e-test.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/axaydeole/starship-e2e-test/issues"
+  },
+  "homepage": "https://github.com/axaydeole/starship-e2e-test#readme"
+}
