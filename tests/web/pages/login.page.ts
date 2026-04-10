@@ -18,9 +18,12 @@ export class LoginPage {
     await this.core.gotoURL('/');
 
     logger.info(`Verifying login elements are visible`);
-    await this.core.verifyVisible('[data-test="username"]');
-    await this.core.verifyVisible('[data-test="password"]');
-    await this.core.verifyVisible('[data-test="login-button"]');
+    await this.core.verifyVisible('[class="mat-mdc-card-title"]');
+    await this.core.verifyVisible('[placeholder="Email address"]');
+    await this.core.verifyVisible('[placeholder="Password"]');
+    await this.core.verifyVisible(
+      '[class="mdc-button mat-mdc-button-base gmc-button mdc-button--unelevated mat-mdc-unelevated-button gmc-button--large mat-default mat-mdc-button-disabled"]',
+    );
   }
 
   /**
@@ -31,9 +34,9 @@ export class LoginPage {
    */
   async login(username: string, password: string) {
     logger.info(`Logging in with username: ${username}`);
-    await this.core.typeText('[data-test="username"]', username);
-    await this.core.typeText('[data-test="password"]', password);
-    await this.core.click('[data-test="login-button"]');
+    await this.core.typeText('[placeholder="Email address"]', username);
+    await this.core.typeText('[placeholder="Password"]', password);
+    await this.core.click('[class="gmc-button__label"]');
   }
 
   /**
@@ -42,9 +45,8 @@ export class LoginPage {
    */
   async verifyLoginSuccessful() {
     logger.info(`Verifying successful login`);
-    await this.core.verifyVisible('[data-test="shopping-cart-link"]');
-    await this.core.verifyVisible('[data-test="title"]');
-    await this.core.verifyVisible('[data-test="inventory-container"]');
+    await this.core.verifyVisible('[class="gmc-page-header__text"]');
+    await this.core.verifyURL('https://dev.getmecover.co.za/dashboard');
   }
 
   /**
@@ -60,21 +62,45 @@ export class LoginPage {
   }
 
   /**
-   * Logs out the user from the application.
-   * Example: await loginPage.logout();
+   * clicking on log out button first click on down arrow and then verify view profile and logout button and then click on log out
    */
   async logout() {
     logger.info(`Logging out`);
 
     logger.info(`Verifying and clicking on the menu button`);
-    await this.core.verifyVisible('#react-burger-menu-btn');
-    await this.core.click('#react-burger-menu-btn');
+    const profilebar = '[class="cdk-menu-trigger profile-bar__container"]';
+    await this.core.click(profilebar);
+    await this.page.waitForTimeout(1000);
+    await this.page.getByText('Logout', { exact: true }).click();
+    /*
+//     logger.info(`Verifying and clicking on the logout button`);
+//     await this.core.typeText("View Profile");
+//     await this.core.click("//span[contains(text(),'View Profile')]");
+//     await this.core.verifyVisible("//span[contains(text(),'Logout')]");
+//     await this.core.click("//span[contains(text(),'Logout')]");
+//     /* Clicked on Dropdown Arrow*/
+    //    const dropdownArrow = this.page.locator('[class="profile-bar__arrow"]');
+    //    await dropdownArrow.scrollIntoViewIfNeeded();
+    //    await dropdownArrow.click();
+    //    // triggers the element to appear
+    //    /* wait to load the dropdown*/
 
-    logger.info(`Verifying and clicking on the logout button`);
-    await this.core.verifyVisible('[data-test="logout-sidebar-link"]');
-    await this.core.click('[data-test="logout-sidebar-link"]');
+    //    /* Wa*/
+    //    const viewProfile = this.page.locator('[class="profile-bar__arrow"]');
+    //    const logout = this.page.locator('[class="mat-mdc-menu-item-text"]');
+
+    // // Wait for them to become visible
+    //    await viewProfile.waitFor({ state: 'visible', timeout: 1000 });
+    //    await logout.waitFor({ state: 'visible', timeout: 1000 });
+
+    // // Click logout
+    // await logout.click();
+
+    // Wait for it to exist and become visible
+    //await dynamicElement.waitFor({ state: 'visible', timeout: 10000 });
+    //await expect(dynamicElement).toBeVisible(); // now this will pass
 
     logger.info(`Verifying user is redirected to the login page`);
-    await this.core.verifyVisible('[data-test="login-button"]');
+    await this.page.getByText('Sign in, {exact:True}');
   }
 }
