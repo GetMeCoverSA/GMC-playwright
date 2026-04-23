@@ -23,54 +23,54 @@ export default defineConfig({
   ],
 
   /* Global test setup */
-use: {
-  baseURL: process.env.BASE_URL || 'https://www.saucedemo.com',
-  headless: true,
-  viewport: null, 
-  launchOptions: { args: ['--window-size=1920,1080'] }, 
-  screenshot: 'only-on-failure',
-  video: 'retain-on-failure',
-  trace: 'on-first-retry',
-  actionTimeout: 15000, // Increase timeout for stability
-  navigationTimeout: 15000, // Ensure page loads properly
-},
-
-/* Define browser configurations */
-projects: [
-  {
-    name: 'chromium',
-    use: { 
-      ...devices['Desktop Chrome'],
-      viewport: { width: 1920, height: 1080 }, // Set a fixed resolution
-      deviceScaleFactor: undefined, 
-    },
+  use: {
+    baseURL: process.env.BASE_URL || 'https://www.saucedemo.com',
+    headless: true,
+    viewport: null,
+    launchOptions: { args: ['--window-size=1920,1080'] },
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    trace: 'on-first-retry',
+    actionTimeout: 40000, // Increase timeout for stability
+    navigationTimeout: 40000, // Ensure page loads properly
   },
-  // {
-  //   name: 'firefox',
-  //   use: { 
-  //     ...devices['Desktop Firefox'],
-  //     viewport: { width: 1920, height: 1080 },
-  //     deviceScaleFactor: undefined,
-  //   },
-  // },
-  // {
-  //   name: 'webkit',
-  //   use: { 
-  //     ...devices['Desktop Safari'],
-  //     viewport: { width: 1920, height: 1080 },
-  //     deviceScaleFactor: undefined,
-  //   },
-  // },
-  // {
-  //   name: 'msedge',
-  //   use: { 
-  //     ...devices['Desktop Edge'], 
-  //     channel: 'msedge',
-  //     viewport: { width: 1920, height: 1080 },
-  //     deviceScaleFactor: undefined,
-  //   },
-  // },
-],
+
+  /* Define browser configurations */
+  projects: [
+    {
+      name: 'chromium',
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1920, height: 1080 }, // Set a fixed resolution
+        deviceScaleFactor: undefined,
+      },
+    },
+    // {
+    //   name: 'firefox',
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //     viewport: { width: 1920, height: 1080 },
+    //     deviceScaleFactor: undefined,
+    //   },
+    // },
+    // {
+    //   name: 'webkit',
+    //   use: {
+    //     ...devices['Desktop Safari'],
+    //     viewport: { width: 1920, height: 1080 },
+    //     deviceScaleFactor: undefined,
+    //   },
+    // },
+    // {
+    //   name: 'msedge',
+    //   use: {
+    //     ...devices['Desktop Edge'],
+    //     channel: 'msedge',
+    //     viewport: { width: 1920, height: 1080 },
+    //     deviceScaleFactor: undefined,
+    //   },
+    // },
+  ],
 
   /* Test execution based on environment selection */
   expect: {

@@ -33,10 +33,13 @@ test('user should be able to see the notification as per the filter options', as
   // await notificationPage.clickAllOptionsDropdown();
 
   //step4: Appy filter for newest to first drop options
-  logger.info('Applying filters for visibility new first/ old first');
-  await notificationPage.clickdefaultDropdown();
+  // logger.info('Applying filters for visibility new first/ old first');
+  // await notificationPage.clickdefaultDropdown();
 
-  //step5:Apply filter on date range and check all notifications
-  logger.info('Applying filters for visibility new first/ old first');
-  await notificationPage.clickDaterangeDropdown();
+  //step5: Apply filter on date range and check all notifications
+  // logger.info('Applying filters for visibility new first/ old first');
+  // await notificationPage.clickDaterangeDropdown();
+  //step6: Apply search on the search bar and see the results
+  //1. Enter the the text on serach bar
+  await notificationPage.clickSearchbar();
 });

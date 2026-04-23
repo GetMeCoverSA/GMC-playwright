@@ -1,6 +1,7 @@
-import { Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { Core } from '../../../utils/core';
 import { logger } from '../../../utils/logger';
+import { exceptions } from 'winston';
 
 export class NotificationPage {
   private core: Core;
@@ -162,5 +163,66 @@ export class NotificationPage {
     await notificationPage1.clickAllOptionsDropdown();
     await this.page.getByText('Today', { exact: true }).click();
     await notificationPage1.clickAllOptionsDropdown();
+  }
+
+  async clickSearchbar() {
+    const searchText = 'poonam';
+    await this.page.getByRole('textbox').fill(searchText);
+    await this.page.waitForTimeout(1000);
+    const notifications = this.page.locator('.notification-item');
+    const count = await notifications.count();
+    if (count > 0) {
+      // ✅ notifications found
+      await this.page.locator('.mdc-checkbox').first().click();
+      console.log('Checkbox selected');
+      this.selectCheckbox('text:string');
+      this.clickSelectAll();
+      await this.page.waitForTimeout(100);
+      this.archiveNotification('text:string');
+      await this.page.waitForTimeout(200);
+      await this.page.locator('gmc-filter-button-group').getByText('Archived').click();
+      await this.page.waitForTimeout(400);
+      this.selectCheckbox('text:string');
+      await this.page.waitForTimeout(200);
+      this.clickSelectAll();
+      await this.page.waitForTimeout(200);
+      this.unarchiveNotification('text:string');
+      await this.page.locator('gmc-filter-button-group').getByText('unarchive').click();
+      await this.page.waitForTimeout(100);
+    } else {
+      // ❌ no notifications
+      await this.page.locator('.empty-state-title').waitFor();
+      console.log('No notifications found');
+    }
+  }
+
+  async selectCheckbox(text: string) {
+    await this.page.locator('.mdc-checkbox').first().click();
+    logger.info(`Selected checkbox for notification: ${text}`);
+  }
+
+  async clickSelectAll() {
+    await this.page.getByText('Select all').click();
+    logger.info('Clicked on Select All');
+  }
+
+  async markAllAsUnread() {
+    await this.page.getByText('Mark all as unread').click();
+    logger.info('Marked all as unread');
+  }
+  async archiveNotification(text: string) {
+    await this.page.waitForTimeout(200);
+    await this.page.locator('gmc-notifications-list-actions').getByText('Archive').first().click();
+    logger.info(`Archived notification: ${text}`);
+    await this.page.waitForLoadState('networkidle');
+  }
+  async unarchiveNotification(text: string) {
+    await this.page
+      .locator('gmc-notifications-list-actions')
+      .getByText('Unarchive')
+      .first()
+      .click();
+    logger.info(`Unarchived notification: ${text}`);
+    await this.page.waitForLoadState('networkidle');
   }
 }
